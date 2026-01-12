@@ -82,6 +82,58 @@ Visit `http://localhost:3000`
 
 ---
 
+## Deployment (Vercel + PostgreSQL)
+
+### 1. Provision PostgreSQL Database
+
+- Use any PostgreSQL instance.
+- Copy the connection string (e.g. `postgresql://user:password@host:5432/dbname`).
+
+### 2. Update Environment Variables
+
+In Vercel project settings, add:
+
+```env
+DATABASE_URL="postgresql://user:password@host:5432/dbname?schema=public"
+JWT_ACCESS_SECRET="your-access-secret"
+JWT_REFRESH_SECRET="your-refresh-secret"
+JWT_ACCESS_EXPIRES="15m"
+JWT_REFRESH_EXPIRES="7d"
+NODE_ENV="production"
+```
+
+### 3. Prisma Setup for PostgreSQL
+
+Update `schema.prisma` to use PostgreSQL provider:
+
+```prisma
+datasource db {
+  provider = "postgresql"
+}
+```
+
+### 4. Run Migrations
+
+Before deploying, push schema to PostgreSQL:
+
+```bash
+ npm run prisma:generate
+ npm run prisma:dbpush
+```
+
+### 5. Deploy to Vercel
+
+- Push your repo to GitHub.
+- Go to Vercel → Import Project.
+- Select your repo, configure environment variables.
+- Deploy.
+
+### 6. Verify Deployment
+
+Visit your Vercel your domain and test authentication + tasks.
+
+---
+
 ## Security
 
 - Passwords hashed with bcrypt
