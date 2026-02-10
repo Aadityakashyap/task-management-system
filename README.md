@@ -1,143 +1,161 @@
 # Task Management System
 
-A full-stack Task Management System built with Next.js (TypeScript), Tailwind CSS, and Prisma ORM.  
-It provides secure authentication, responsive UI/UX, and complete task CRUD functionality with filtering, search, and pagination.
-
----
+A full-stack Task Management System that allows users to securely register, log in, and manage personal tasks.
+Built using Node.js, TypeScript, Express, Prisma, PostgreSQL, and Next.js with industry-standard authentication.
 
 ## Features
 
-- Authentication
-  - User registration, login, logout
-  - JWT-based security (Access + Refresh tokens)
-  - Password hashing with bcrypt
-- Task Management
-  - Create, view, edit, delete tasks
-  - Filtering by status, searching by title
-  - Pagination for large task lists
-- Frontend
-  - Responsive design
-  - Dark/light mode toggle
-  - Smooth animations & transitions
-  - Toast notifications
-- Backend
-  - Node.js + TypeScript API routes
-  - Prisma ORM with SQLite
-  - Zod validation & error handling
+### Authentication & Security
 
----
+- User Registration, Login, Logout
+- JWT-based authentication
+  - Short-lived Access Tokens
+  - Refresh Tokens for session persistence
+- Secure HttpOnly cookies
+- Password hashing using bcrypt
+- Protected routes with authentication guards
+
+### Task Management
+
+- Create, Read, Update, Delete (CRUD) tasks
+- Tasks are scoped to the authenticated user
+- Task status toggle (`PENDING → IN_PROGRESS → DONE`) by editing tasks.
+- Pagination, filtering (by status), and search (by title)
+
+### Frontend (Next.js)
+
+- Built with Next.js + TypeScript
+- Responsive UI
+- Toast notifications for user actions
+- Pagination UI
+- Auth-guarded routes
+- Tailwind CSS for scalable styling
+- Dark mode
+
+## Architecture Overview
+
+```
+task-management-system/
+├── backend/      # Node.js + Express + Prisma ORM
+└── frontend/     # Next.js + Tailwind CSS
+```
 
 ## Tech Stack
 
-- Frontend: Next.js, TypeScript, Tailwind CSS
-- Backend: Node.js, Next.js API Routes, Prisma ORM
-- Database: SQLite
-- Auth: JWT (Access + Refresh), bcrypt password hashing
-- Validation: Zod
+### Backend
 
----
+- Node.js
+- Express
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- JWT (jsonwebtoken)
+- bcrypt
+- Zod
 
-## Getting Started
+### Frontend
 
-### 1. Clone the repo
+- Next.js
+- TypeScript
+- Tailwind CSS
+- React Toastify
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js (v18+)
+- PostgreSQL
+
+### Clone the repo:
 
 ```bash
 git clone task-management-system
 cd task-management-system
 ```
 
-### 2. Install dependencies
+### Backend Setup
 
 ```bash
+cd backend
 npm install
 ```
 
-### 3. Configure environment variables
-
-Create `.env`:
+Create `.env` file:
 
 ```env
-DATABASE_URL="file:./data/dev.db"
-JWT_ACCESS_SECRET="your-access-secret"
-JWT_REFRESH_SECRET="your-refresh-secret"
-JWT_ACCESS_EXPIRES="15m"
-JWT_REFRESH_EXPIRES="7d"
-NODE_ENV="development"
+PORT=4000
+DATABASE_URL=postgresql://user:password@localhost:5432/tms
+JWT_ACCESS_SECRET=your_access_secret
+JWT_REFRESH_SECRET=your_refresh_secret
 ```
 
-### 4. Setup database
+Run Prisma migrations:
 
 ```bash
-npm run prisma:generate
-npm run prisma:dbpush
+npx prisma migrate dev
 ```
 
-### 5. Run development server
+Start backend:
 
 ```bash
 npm run dev
 ```
 
-Visit `http://localhost:3000`
+Backend runs at:
+
+```
+http://localhost:4000
+```
 
 ---
 
-## Deployment (Vercel + PostgreSQL)
-
-### 1. Provision PostgreSQL Database
-
-- Use any PostgreSQL instance.
-- Copy the connection string (e.g. `postgresql://user:password@host:5432/dbname`).
-
-### 2. Update Environment Variables
-
-In Vercel project settings, add:
-
-```env
-DATABASE_URL="postgresql://user:password@host:5432/dbname?schema=public"
-JWT_ACCESS_SECRET="your-access-secret"
-JWT_REFRESH_SECRET="your-refresh-secret"
-JWT_ACCESS_EXPIRES="15m"
-JWT_REFRESH_EXPIRES="7d"
-NODE_ENV="production"
-```
-
-### 3. Prisma Setup for PostgreSQL
-
-Update `schema.prisma` to use PostgreSQL provider:
-
-```prisma
-datasource db {
-  provider = "postgresql"
-}
-```
-
-### 4. Run Migrations
-
-Before deploying, push schema to PostgreSQL:
+### Frontend Setup
 
 ```bash
- npm run prisma:generate
- npm run prisma:dbpush
+cd frontend
+npm install
 ```
 
-### 5. Deploy to Vercel
+Create `.env.local`:
 
-- Push your repo to GitHub.
-- Go to Vercel → Import Project.
-- Select your repo, configure environment variables.
-- Deploy.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:4000
+```
 
-### 6. Verify Deployment
+Start frontend:
 
-Visit your Vercel your domain and test authentication + tasks.
+```bash
+npm run dev
+```
 
----
+Frontend runs at:
 
-## Security
+```
+http://localhost:3000
+```
 
-- Passwords hashed with bcrypt
-- JWT Access (short-lived) + Refresh (long-lived)
-- Refresh token rotation & revocation
-- HttpOnly cookies for tokens
-- Input validation with Zod
+## Authentication Flow
+
+1. User logs in with email/password
+2. Backend issues:
+   - Access Token (short-lived)
+   - Refresh Token (long-lived)
+3. Tokens stored in HttpOnly cookies
+4. Protected routes validate access token
+5. Refresh endpoint issues new access token when expired
+
+## Checklist
+
+- [x] Node.js + TypeScript backend
+- [x] Prisma ORM + SQL database
+- [x] JWT authentication with refresh tokens
+- [x] Task CRUD with pagination & filtering
+- [x] Next.js frontend
+- [x] Clean architecture & folder structure
+
+## Screenshots
+
+| Login | SignUp | Dashboard | Create | Search/Sort |
+|-------|--------|-----------|-----------|
+| ![](screenshots/login.png) | ![](screenshots/signup.png) | ![](screenshots/dashboard.png) | ![](screenshots/create.png) | ![](screenshots/search.png) |
