@@ -157,5 +157,5 @@ http://localhost:3000
 ## Screenshots
 
 | Login | SignUp | Dashboard | Create | Search/Sort |
-|-------|--------|-----------|-----------|
-| ![](screenshots/login.png) | ![](screenshots/signup.png) | ![](screenshots/dashboard.png) | ![](screenshots/create.png) | ![](screenshots/search.png) |
+|-------|--------|-----------|-----------|----------|
+| ![Login](task-management-system/blob/task-management-system-fullstack/Screenshots/login.png) | ![SignUp](task-management-system/blob/task-management-system-fullstack/Screenshots/signup.png) | ![Dashboard](task-management-system/blob/task-management-system-fullstack/Screenshots/dashboard.png) | ![Create](task-management-system/blob/task-management-system-fullstack/Screenshots/create.png) | ![Search/Sort](task-management-system/blob/task-management-system-fullstack/Screenshots/search.png) |
