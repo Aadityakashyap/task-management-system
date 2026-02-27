@@ -112,3 +112,15 @@ body {
 .page-enter-active {
   @apply opacity-100 translate-y-0 transition duration-200 ease-out;
 }
+
+.checkbox-check::after {
+  content: "✔";
+  position: absolute;
+  left: -2px;
+  top: -4px;
+  opacity: 0;
+}
+
+.peer:checked + .checkbox-check::after {
+  opacity: 1;
+}

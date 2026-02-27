@@ -17,6 +17,7 @@ export interface TaskCardsProps {
   dueDate: string;
   createdAt: string;
   onClick?: () => void;
+  onToggle: () => void;
 }
 
 export interface Task {

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import TaskStatusTabs from "@/components/TaskStatusTabs";
 import TaskCards from "@/components/TaskCards";
 import { Task, TaskQueryParams } from "@/lib/types";
-import { task } from "@/lib/task";
+import { task, toggleTask } from "@/lib/task";
 
 const MyTasks: React.FC = () => {
   const router = useRouter();
@@ -44,6 +44,11 @@ const MyTasks: React.FC = () => {
 
   const handleClick = (taskData: Task) => {
     router.push(`/create?taskId=${taskData.id}`);
+  };
+
+  const handleToggle = async (id: string) => {
+    await toggleTask(id);
+    setAllTasks((prev) => prev.map((task) => task.id === id && {...task, status: "DONE" }));
   };
 
   useEffect(() => {
@@ -98,6 +103,7 @@ const MyTasks: React.FC = () => {
                 dueDate={item.dueDate}
                 createdAt={item.createdAt}
                 onClick={() => handleClick(item)}
+                onToggle={() => handleToggle(item.id)}
               />
             ))}
           </div>

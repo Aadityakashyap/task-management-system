@@ -7,6 +7,7 @@ const TaskCards: React.FC<TaskCardsProps> = ({
   dueDate,
   createdAt,
   onClick,
+  onToggle,
 }) => {
   const getStatusTagColor = () => {
     switch (status) {
@@ -24,12 +25,29 @@ const TaskCards: React.FC<TaskCardsProps> = ({
       className="bg-bg-secondary rounded-xl py-4 shadow-md shadow-bg-tertiary border border-border-primary cursor-pointer"
       onClick={onClick}
     >
-      <div className="flex items-end gap-3 px-4">
+      <div className="flex items-center justify-between gap-3 px-4">
         <div
           className={`text-[11px] font-medium ${getStatusTagColor()} px-4 py-0.5 rounded`}
         >
           {status}
         </div>
+
+        <label
+          className="relative inline-flex h-5 w-5 items-center justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <input
+            type="checkbox"
+            onChange={onToggle}
+            aria-label="Mark task completed"
+            className="peer absolute h-5 w-5 cursor-pointer opacity-0"
+          />
+
+          <span
+            className="relative inline-block h-5 w-5 rounded-md border-2 border-border-secondary transition-all duration-200 peer-checked:bg-success peer-checked:border-transparent peer-checked:shadow-[0_4px_12px_rgba(34,197,94,0.35)] checkbox-check"
+            aria-hidden="true"
+          />
+        </label>
       </div>
 
       <div

@@ -24,3 +24,8 @@ export const deleteByID = (id: any) =>
   apiFetch(`/tasks/${id}`, {
     method: "DELETE",
   });
+
+export const toggleTask = (taskId: string) =>
+  apiFetch(`/tasks/${taskId}/toggle`, {
+    method: "PATCH",
+  });

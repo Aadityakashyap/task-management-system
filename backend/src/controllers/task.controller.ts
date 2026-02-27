@@ -59,3 +59,14 @@ export const deleteTask = async (req: AuthRequest, res: Response) => {
 
   return res.status(200).json({ ok: true });
 };
+
+export const toggleTask = async (req: AuthRequest, res: Response) => {
+  const taskId = req.params.id;
+
+  if (typeof taskId !== "string") {
+    return res.status(400).json({ error: "Invalid task id" });
+  }
+
+  const task = await taskService.toggle(req.userId!, taskId);
+  res.json(task);
+};

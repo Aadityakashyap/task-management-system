@@ -78,4 +78,10 @@ export const taskService = {
     await prisma.task.delete({ where: { id } });
     return true;
   },
+
+  async toggle(userId: string, id: string) {
+    const task = await prisma.task.findFirstOrThrow({ where: { id, userId } });
+    const next = task.status === "PENDING" || "IN_PROGRESS" ? "DONE" : "PENDING";
+    return prisma.task.update({ where: { id }, data: { status: next } });
+  },
 };
